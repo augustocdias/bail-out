@@ -1,0 +1,11 @@
+[package]
+name = "bail-out"
+version = "0.1.0"
+authors = ["Augusto César Dias<augusto.c.dias@gmail.com>"]
+edition = "2018"
+license = "MIT"
+description = "Macros to help keep code clean for validations and error handling"
+repository = "https://github.com/augustocdias/bail-out"
+documentation = "https://docs.rs/bail-out"
+readme = "README.md"
+categories = ["rust-patterns"]
