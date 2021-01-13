@@ -127,7 +127,7 @@ macro_rules! ensure_not_or {
 macro_rules! ensure_bail {
     ($cond:expr, $error:expr) => {
         if !$cond {
-            bail!($error);
+            $crate::bail!($error);
         }
     };
 }
@@ -153,7 +153,7 @@ macro_rules! ensure_bail {
 macro_rules! ensure_bail_not {
     ($cond:expr, $error:expr) => {
         if $cond {
-            bail!($error);
+            $crate::bail!($error);
         }
     };
 }
