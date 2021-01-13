@@ -172,7 +172,7 @@ macro_rules! ensure_bail_not {
 #[macro_export]
 macro_rules! bail {
     ($error:expr) => {
-        return Err($error)?;
+        return Err($error);
     };
 }
 
