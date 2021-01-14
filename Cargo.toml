@@ -1,6 +1,6 @@
 [package]
 name = "bail-out"
-version = "0.1.2"
+version = "0.2.0"
 authors = ["Augusto César Dias<augusto.c.dias@gmail.com>"]
 edition = "2018"
 license = "MIT"

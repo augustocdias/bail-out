@@ -1,6 +1,6 @@
 //! This library is inspired in the `ensure` and `bail` macros from `anyhow`. The difference is that it is not tied to anyhow's types.
 //! Many libraries have their own error types and using the anyhow's `ensure` macro doesn't work because it returns an anyhow error. This library intends to work with any type.
-
+//! This library also provides the `assure` macro, that does the same but evaluates to a `Result` instead of returning. This is useful for using inside `try` blocks.
 
 /// Ensures the condition is met. This evaluates to a `Result<(), ERROR>`
 /// This macro is equivalent to `if !cond { Err(error) } else { Ok(()) }`.
@@ -8,17 +8,17 @@
 /// ```
 /// use bail_out::*;
 /// fn test_err() -> Result<(), &'static str> {
-///    ensure!(false, "error")
+///    assure!(false, "error")
 /// }
 /// assert_eq!(test_err(), Err("error"));
 ///
 /// fn test_ok() -> Result<(), &'static str> {
-///    ensure!(true, "error")
+///    assure!(true, "error")
 /// }
 /// assert!(test_ok().is_ok());
 /// ```
 #[macro_export]
-macro_rules! ensure {
+macro_rules! assure {
     ($cond:expr, $error:expr) => {
         if !$cond {
             Err($error)
@@ -34,17 +34,17 @@ macro_rules! ensure {
 /// ```
 /// use bail_out::*;
 /// fn test_err() -> Result<&'static str, &'static str> {
-///    ensure_or!(false, "ok", "error")
+///    assure_or!(false, "ok", "error")
 /// }
 /// assert_eq!(test_err(), Err("error"));
 ///
 /// fn test_ok() -> Result<&'static str, &'static str> {
-///    ensure_or!(true, "ok", "error")
+///    assure_or!(true, "ok", "error")
 /// }
 /// assert_eq!(test_ok(), Ok("ok"));
 /// ```
 #[macro_export]
-macro_rules! ensure_or {
+macro_rules! assure_or {
     ($cond:expr, $ok: expr, $error:expr) => {
         if !$cond {
             Err($error)
@@ -60,17 +60,17 @@ macro_rules! ensure_or {
 /// ```
 /// use bail_out::*;
 /// fn test_err() -> Result<(), &'static str> {
-///    ensure_not!(true, "error")
+///    assure_not!(true, "error")
 /// }
 /// assert_eq!(test_err(), Err("error"));
 ///
 /// fn test_ok() -> Result<(), &'static str> {
-///    ensure_not!(false, "error")
+///    assure_not!(false, "error")
 /// }
 /// assert!(test_ok().is_ok());
 /// ```
 #[macro_export]
-macro_rules! ensure_not {
+macro_rules! assure_not {
     ($cond:expr, $error:expr) => {
         if $cond {
             Err($error)
@@ -86,17 +86,17 @@ macro_rules! ensure_not {
 /// ```
 /// use bail_out::*;
 /// fn test_err() -> Result<&'static str, &'static str> {
-///    ensure_not_or!(true, "ok", "error")
+///    assure_not_or!(true, "ok", "error")
 /// }
 /// assert_eq!(test_err(), Err("error"));
 ///
 /// fn test_ok() -> Result<&'static str, &'static str> {
-///    ensure_not_or!(false, "ok", "error")
+///    assure_not_or!(false, "ok", "error")
 /// }
 /// assert_eq!(test_ok(), Ok("ok"));
 /// ```
 #[macro_export]
-macro_rules! ensure_not_or {
+macro_rules! assure_not_or {
     ($cond:expr, $ok:expr, $error:expr) => {
         if $cond {
             Err($error)
@@ -112,19 +112,19 @@ macro_rules! ensure_not_or {
 /// ```
 /// use bail_out::*;
 /// fn test_err() -> Result<(), &'static str> {
-///    ensure_bail!(false, "error");
+///    ensure!(false, "error");
 ///    Ok(())
 /// }
 /// assert_eq!(test_err(), Err("error"));
 ///
 /// fn test_ok() -> Result<(), &'static str> {
-///    ensure_bail!(true, "ok");
+///    ensure!(true, "ok");
 ///    Ok(())
 /// }
 /// assert_eq!(test_ok(), Ok(()));
 /// ```
 #[macro_export]
-macro_rules! ensure_bail {
+macro_rules! ensure {
     ($cond:expr, $error:expr) => {
         if !$cond {
             $crate::bail!($error);
@@ -138,19 +138,19 @@ macro_rules! ensure_bail {
 /// ```
 /// use bail_out::*;
 /// fn test_err() -> Result<(), &'static str> {
-///    ensure_bail_not!(true, "error");
+///    ensure_not!(true, "error");
 ///    Ok(())
 /// }
 /// assert_eq!(test_err(), Err("error"));
 ///
 /// fn test_ok() -> Result<(), &'static str> {
-///    ensure_bail_not!(false, "ok");
+///    ensure_not!(false, "ok");
 ///    Ok(())
 /// }
 /// assert_eq!(test_ok(), Ok(()));
 /// ```
 #[macro_export]
-macro_rules! ensure_bail_not {
+macro_rules! ensure_not {
     ($cond:expr, $error:expr) => {
         if $cond {
             $crate::bail!($error);

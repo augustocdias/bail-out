@@ -1,35 +1,35 @@
 #[test]
 fn test_ensure() {
-    let error = ensure!(false, "error");
+    let error = assure!(false, "error");
     assert_eq!(error, Err("error"));
 
-    let error = ensure!(true, "error");
+    let error = assure!(true, "error");
     assert!(error.is_ok());
 }
 
 #[test]
 fn test_ensure_or() {
-    let error = ensure_or!(false, "ok", "error");
+    let error = assure_or!(false, "ok", "error");
     assert_eq!(error, Err("error"));
 
-    let error = ensure_or!(true, "ok", "error");
+    let error = assure_or!(true, "ok", "error");
     assert_eq!(error, Ok("ok"));
 }
 
 #[test]
 fn test_ensure_not() {
-    let error = ensure_not!(false, "error");
+    let error = assure_not!(false, "error");
     assert!(error.is_ok());
 
-    let error = ensure_not!(true, "error");
+    let error = assure_not!(true, "error");
     assert_eq!(error, Err("error"));
 }
 
 #[test]
 fn test_ensure_not_or() {
-    let error = ensure_not_or!(false, "ok", "error");
+    let error = assure_not_or!(false, "ok", "error");
     assert_eq!(error, Ok("ok"));
 
-    let error = ensure_not_or!(true, "ok", "error");
+    let error = assure_not_or!(true, "ok", "error");
     assert_eq!(error, Err("error"));
 }
